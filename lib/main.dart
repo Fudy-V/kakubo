@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:kakubo/core/components/app_bar.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:kakubo/core/datasources/models/items.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:path_provider/path_provider.dart'
 
 late Box box;
 Future<void> main() async {
@@ -42,11 +43,6 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
-      ),
-    );
+    return Scaffold(appBar: AppBarComponent(title: '購入前ページ'));
   }
 }
