@@ -17,8 +17,8 @@ class PreferredSize extends StatelessWidget implements PreferredSizeWidget {
 }
 
 class AppBarComponent extends StatelessWidget implements PreferredSizeWidget {
-  AppBarComponent({required this.title, super.key});
-  String title;
+  const AppBarComponent({required this.title, super.key});
+  final String title;
 
   @override
   Size get preferredSize {

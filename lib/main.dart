@@ -43,6 +43,6 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: AppBarComponent(title: '購入前ページ'));
+    return const Scaffold(appBar: AppBarComponent(title: '購入前ページ'));
   }
 }
