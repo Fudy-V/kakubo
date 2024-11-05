@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
-class PreferredSize extends StatelessWidget implements PreferredSizeWidget {
-  const PreferredSize({
+class CustomPreferredSize extends StatelessWidget
+    implements PreferredSizeWidget {
+  const CustomPreferredSize({
     super.key,
     required this.child,
     required this.preferredSize,
