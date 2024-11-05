@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kakubo/core/components/app_bar.dart';
+import 'package:kakubo/core/components/app_bar/app_bar.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:kakubo/core/datasources/models/items.dart';
 import 'package:path_provider/path_provider.dart';
