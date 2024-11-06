@@ -10,7 +10,8 @@ class UnratedList extends StatefulWidget {
 class _UnratedListState extends State<UnratedList> {
   @override
   Widget build(BuildContext context) {
-    // 下の青線は「constつけろ」やけど、つけるとタイトル変えられなくなってコンポーネント化の意味無くなるから無視でok
-    return Scaffold(appBar: AppBarComponent(title: '購入品リスト'));
+    return const Scaffold(
+      body: Text('ここに未評価リスト'),
+    );
   }
 }
