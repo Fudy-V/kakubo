@@ -31,10 +31,10 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: DefaultTabController(
+        home: const DefaultTabController(
             length: 3,
             child: Scaffold(
-              appBar: const AppBarComponent(title: 'KAKUBO'),
+              appBar: AppBarComponent(title: 'KAKUBO'),
               body: TabBarView(
                 children: <Widget>[
                   PurchaseList(),
