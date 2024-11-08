@@ -8,6 +8,7 @@ import 'package:kakubo/screens/regret_list.dart';
 import 'package:kakubo/screens/unrated_list.dart';
 // import 'package:kakubo/screens/purchase_list.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:kakubo/features/input/entries/input.dart';
 
 late Box box;
 Future<void> main() async {
@@ -26,14 +27,32 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-          useMaterial3: true,
-        ),
-        home: DefaultTabController(
-            length: 3,
-            child: Scaffold(
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        useMaterial3: true,
+      ),
+      home: DefaultTabController(
+        length: 3,
+        child: Builder(
+          builder: (BuildContext context) {
+            return Scaffold(
+              floatingActionButton: FloatingActionButton(
+                onPressed: () {
+                  showModalBottomSheet(
+                    context: context,
+                    isScrollControlled: true,
+                    shape: RoundedRectangleBorder(
+                      borderRadius:
+                          BorderRadius.vertical(top: Radius.circular(20)),
+                    ),
+                    builder: (BuildContext context) {
+                      return InputItems();
+                    },
+                  );
+                },
+                child: Icon(Icons.add),
+              ),
               appBar: const AppBarComponent(title: 'KAKUBO'),
               body: TabBarView(
                 children: <Widget>[
@@ -42,6 +61,10 @@ class MyApp extends StatelessWidget {
                   RegretList(),
                 ],
               ),
-            )));
+            );
+          },
+        ),
+      ),
+    );
   }
 }
