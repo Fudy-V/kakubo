@@ -2,19 +2,15 @@ import 'package:flutter/material.dart';
 
 class SampleListView extends StatefulWidget {
   @override
-  _SampleListViewState createState() => _SampleListViewState();
+  SampleListView(this._samplelist, this._screen); //これで外のリストを取り込めるようになったはず
+  final List<Map<String, dynamic>> _samplelist;
+  final int _screen;
+  _SampleListViewState createState() => _SampleListViewState(_samplelist);
 }
 
 class _SampleListViewState extends State<SampleListView> {
-  //_sampleListの中にサンプルデータ。これをこのクラス外部と受け渡す方法を実装したい
-  List<Map<String, dynamic>> _samplelist = [
-    {'date': '2024/11/09', 'itemName': 'pencil', 'price': '100'},
-    {'date': '2024/11/07', 'itemName': 'eraser', 'price': '120'},
-    {'date': '2024/11/07', 'itemName': 'macMiniPCM4chip', 'price': '200000'},
-    {'date': '2024/11/07', 'itemName': 'pomodoroTimer', 'price': '1200'},
-    {'date': '2024/11/07', 'itemName': 'ChatGPTaccount', 'price': '1200'},
-    {'date': '2024/11/07', 'itemName': 'coffee', 'price': '540'}
-  ];
+  _SampleListViewState(this._samplelist);
+  List<Map<String, dynamic>> _samplelist;
   int _index = 0;
 
   @override
@@ -65,6 +61,13 @@ class _SampleListViewState extends State<SampleListView> {
   }
 
   void _tapTile() {
+    if (widget._screen == 1) {
+      //perchace_list process
+    } else if (widget._screen == 2) {
+      //unrated_list process
+    } else {
+      //regret_list process
+    }
     //タップされたときの挙動。データを受け渡して評価シーンに遷移したい。
     print(_index);
   }

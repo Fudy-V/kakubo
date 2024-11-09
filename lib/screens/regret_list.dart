@@ -16,10 +16,3 @@ class _RegretListState extends State<RegretList> {
     );
   }
 }
-
-class _purchaseList extends SampleListView {
-  @override
-  void _tapTile() {
-    //write process here
-  }
-}
