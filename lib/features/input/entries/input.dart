@@ -22,15 +22,12 @@ class _InputItemsState extends State<InputItems> {
   void addList() {
     final String itemName = itemController.text;
     final int itemPrice = int.parse(priceController.text);
-
     final newItem = Items(
       item: itemName,
       price: itemPrice,
     );
-
     final box = Hive.box('box');
     box.add(newItem);
-
     print('商品名: $itemName');
     print('金額: $itemPrice');
   }
