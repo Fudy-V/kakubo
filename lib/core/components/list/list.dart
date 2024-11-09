@@ -66,5 +66,6 @@ class _SampleListViewState extends State<SampleListView> {
 
   void _tapTile() {
     //タップされたときの挙動。データを受け渡して評価シーンに遷移したい。
+    print(_index);
   }
 }
