@@ -26,7 +26,7 @@ class _InputItemsState extends State<InputItems> {
       item: itemName,
       price: itemPrice,
     );
-    final box = Hive.box('box');
+    final box = Hive.box('aaaa');
     box.add(newItem);
     print('商品名: $itemName');
     print('金額: $itemPrice');
