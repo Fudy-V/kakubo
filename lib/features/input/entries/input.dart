@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:kakubo/core/datasources/models/items.dart';
 
 class InputItems extends StatefulWidget {
   const InputItems({super.key});
@@ -17,11 +19,22 @@ class _InputItemsState extends State<InputItems> {
   // フォームのキー　validatorでtextfieldが空とかnullの時の処理が記述可能
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
+  void addList() {
+    final String itemName = itemController.text;
+    final int itemPrice = int.parse(priceController.text);
+    final newItem = Items(
+      item: itemName,
+      price: itemPrice,
+    );
+    final box = Hive.box('box');
+    box.add(newItem);
+    print('商品名: $itemName');
+    print('金額: $itemPrice');
+  }
+
   void submition() {
     if (_formKey.currentState?.validate() ?? false) {
-      // 入力が正しければ、データを使用する処理
-      print('商品名: ${itemController.text}');
-      print('金額: ${priceController.text}');
+      addList();
       Navigator.pop(context); // 入力フォームを閉じる
     }
   }
