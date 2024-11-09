@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class SampleListView extends StatefulWidget {
   @override
@@ -112,6 +113,65 @@ class _SampleListViewState extends State<SampleListView> {
       );
     } else if (widget._screen == 2) {
       // unrated_list process
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          double rate = 0;
+          return AlertDialog(
+            title: const Text('後悔度入力'),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Text('後悔度を選択してください。'),
+                RatingBar.builder(
+                  initialRating: 0,
+                  minRating: 1,
+                  direction: Axis.horizontal,
+                  allowHalfRating: true,
+                  itemCount: 5,
+                  itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+                  itemBuilder: (context, _) => const Icon(
+                    Icons.star,
+                    color: Colors.amber,
+                  ),
+                  onRatingUpdate: (rating) {
+                    setState(() {
+                      rate = rating;
+                    });
+                  },
+                ),
+                const SizedBox(height: 10),
+                Text(
+                  '後悔度：$rate',
+                  style: const TextStyle(
+                    color: Colors.grey,
+                  ),
+                ),
+              ],
+            ),
+            actions: <Widget>[
+              ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    _samplelist[_index]['rate'] = rate;
+                  });
+                  Navigator.of(context).pop();
+                },
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.white,
+                  backgroundColor: Colors.blue,
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                child: const Text('後悔度を決定'),
+              ),
+            ],
+          );
+        },
+      );
     } else {
       // regret_list process
     }
