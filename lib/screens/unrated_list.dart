@@ -16,10 +16,3 @@ class _UnratedListState extends State<UnratedList> {
     );
   }
 }
-
-class _purchaseList extends SampleListView {
-  @override
-  void _tapTile() {
-    //write process here
-  }
-}
