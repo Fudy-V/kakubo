@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
+// import 'package:hive/hive.dart';
 import 'package:kakubo/core/datasources/models/items.dart';
+import 'package:kakubo/main.dart';
 
 class InputItems extends StatefulWidget {
   const InputItems({super.key});
@@ -33,11 +34,11 @@ class _InputItemsState extends State<InputItems> {
       price: itemPrice,
       date: currentDate, // 日付を追加
     );
-    final box = Hive.box('aaa');
+    // final box = Hive.box('itemsBox');
     box.add(newItem);
-    print('商品名: $itemName');
-    print('金額: $itemPrice');
-    print('日付: $currentDate');
+    // print('商品名: $itemName');
+    // print('金額: $itemPrice');
+    // print('日付: $currentDate');
   }
 
   void submition() {

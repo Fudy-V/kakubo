@@ -8,13 +8,23 @@ import 'package:kakubo/screens/unrated_list.dart';
 import 'package:path_provider/path_provider.dart';
 
 late Box box;
-Future<void> main() async {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final appDir = await getApplicationDocumentsDirectory();
   await Hive.initFlutter(appDir.path);
-  box = await Hive.openBox('aaaa');
 
+  // 先にItemsAdapterを登録しなあかんみたい
   Hive.registerAdapter(ItemsAdapter());
+  box = await Hive.openBox<Items>('itemsBox');
+
+  // openBoxが完了した時にログを出力
+  try {
+    await Hive.openBox<Items>('itemsBox');
+    print('Hive box opened successfully!');
+  } catch (e) {
+    print('Error opening Hive box: $e');
+  }
+
   runApp(const MyApp());
 }
 
