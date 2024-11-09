@@ -18,7 +18,7 @@ class Items {
   @HiveField(5)
   final bool isPurchased;
   @HiveField(6)
-  final int rate;
+  final double rate;
 
   Items({
     required this.item,
@@ -26,7 +26,7 @@ class Items {
     this.isRated = false,
     this.isDelated = false,
     this.isPurchased = false,
-    this.rate = 0,
+    this.rate = 0.0,
     DateTime? date,
   }) : date = date ??
             DateTime(

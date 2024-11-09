@@ -22,7 +22,7 @@ class ItemsAdapter extends TypeAdapter<Items> {
       isRated: fields[2] as bool,
       isDelated: fields[3] as bool,
       isPurchased: fields[5] as bool,
-      rate: fields[6] as int,
+      rate: fields[6] as double,
       date: fields[4] as DateTime?,
     );
   }
