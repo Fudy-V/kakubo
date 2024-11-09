@@ -21,15 +21,23 @@ class _InputItemsState extends State<InputItems> {
 
   void addList() {
     final String itemName = itemController.text;
-    final int itemPrice = int.parse(priceController.text);
+    final int? itemPrice = int.tryParse(priceController.text);
+    if (itemPrice == null) {
+      // 金額が無効な場合のエラーハンドリング
+      print('無効な金額が入力されました');
+      return;
+    }
+    final DateTime currentDate = DateTime.now();
     final newItem = Items(
       item: itemName,
       price: itemPrice,
+      date: currentDate, // 日付を追加
     );
-    final box = Hive.box('aaaa');
+    final box = Hive.box('aaa');
     box.add(newItem);
     print('商品名: $itemName');
     print('金額: $itemPrice');
+    print('日付: $currentDate');
   }
 
   void submition() {
