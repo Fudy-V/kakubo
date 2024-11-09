@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kakubo/core/components/list/list.dart';
 
 class RegretList extends StatefulWidget {
   const RegretList({super.key});
@@ -13,5 +14,12 @@ class _RegretListState extends State<RegretList> {
     return const Scaffold(
       body: Center(child: Text('ここに後悔リスト')),
     );
+  }
+}
+
+class _purchaseList extends SampleListView {
+  @override
+  void _tapTile() {
+    //write process here
   }
 }

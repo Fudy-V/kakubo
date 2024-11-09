@@ -18,3 +18,10 @@ class _PurchaseListState extends State<PurchaseList> {
     );
   }
 }
+
+class _purchaseList extends SampleListView {
+  @override
+  void _tapTile() {
+    //write process here
+  }
+}
