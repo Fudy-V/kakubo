@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kakubo/core/components/list/list.dart';
 
 class UnratedList extends StatefulWidget {
   const UnratedList({super.key});
@@ -13,5 +14,12 @@ class _UnratedListState extends State<UnratedList> {
     return const Scaffold(
       body: Center(child: Text('ここに未評価リスト')),
     );
+  }
+}
+
+class _purchaseList extends SampleListView {
+  @override
+  void _tapTile() {
+    //write process here
   }
 }
