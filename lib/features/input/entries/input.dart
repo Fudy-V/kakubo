@@ -37,9 +37,7 @@ class _InputItemsState extends State<InputItems> {
 
   void submition() {
     if (_formKey.currentState?.validate() ?? false) {
-      // 入力が正しければ、データを使用する処理
-      print('商品名: ${itemController.text}');
-      print('金額: ${priceController.text}');
+      addList();
       Navigator.pop(context); // 入力フォームを閉じる
     }
   }
