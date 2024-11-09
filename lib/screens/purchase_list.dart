@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kakubo/core/components/inputButton/input_buttton.dart';
 import 'package:kakubo/core/components/list/list.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class PurchaseList extends StatefulWidget {
   const PurchaseList({super.key});

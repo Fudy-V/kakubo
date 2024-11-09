@@ -1,5 +1,4 @@
 import 'package:hive/hive.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 part 'items.g.dart';
 
