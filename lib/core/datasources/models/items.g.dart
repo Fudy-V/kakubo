@@ -22,6 +22,7 @@ class ItemsAdapter extends TypeAdapter<Items> {
       isRated: fields[2] as bool,
       isDelated: fields[3] as bool,
       isPurchased: fields[5] as bool,
+      rate: fields[6] as int,
       date: fields[4] as DateTime?,
     );
   }
@@ -29,7 +30,7 @@ class ItemsAdapter extends TypeAdapter<Items> {
   @override
   void write(BinaryWriter writer, Items obj) {
     writer
-      ..writeByte(6)
+      ..writeByte(7)
       ..writeByte(0)
       ..write(obj.item)
       ..writeByte(1)
@@ -41,7 +42,9 @@ class ItemsAdapter extends TypeAdapter<Items> {
       ..writeByte(4)
       ..write(obj.date)
       ..writeByte(5)
-      ..write(obj.isPurchased);
+      ..write(obj.isPurchased)
+      ..writeByte(6)
+      ..write(obj.rate);
   }
 
   @override

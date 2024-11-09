@@ -1,4 +1,5 @@
 import 'package:hive/hive.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 part 'items.g.dart';
 
@@ -16,6 +17,8 @@ class Items {
   final DateTime date;
   @HiveField(5)
   final bool isPurchased;
+  @HiveField(6)
+  final int rate;
 
   Items({
     required this.item,
@@ -23,6 +26,7 @@ class Items {
     this.isRated = false,
     this.isDelated = false,
     this.isPurchased = false,
+    this.rate = 0,
     DateTime? date,
   }) : date = date ??
             DateTime(
