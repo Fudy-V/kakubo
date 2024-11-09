@@ -62,13 +62,59 @@ class _SampleListViewState extends State<SampleListView> {
 
   void _tapTile() {
     if (widget._screen == 1) {
-      //perchace_list process
+      // purchase_list process
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('購入確認'),
+            content: const Text('この商品を購入しましたか？'),
+            actions: <Widget>[
+              ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    _samplelist[_index]['isPurchased'] = true;
+                  });
+                  Navigator.of(context).pop();
+                },
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.white,
+                  backgroundColor: const Color.fromARGB(255, 244, 57, 50),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                child: const Text('購入した'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    _samplelist[_index]['isPurchased'] = false;
+                  });
+                  Navigator.of(context).pop();
+                },
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.white,
+                  backgroundColor: Colors.grey,
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                child: const Text('購入していない'),
+              ),
+            ],
+          );
+        },
+      );
     } else if (widget._screen == 2) {
-      //unrated_list process
+      // unrated_list process
     } else {
-      //regret_list process
+      // regret_list process
     }
-    //タップされたときの挙動。データを受け渡して評価シーンに遷移したい。
     print(_index);
   }
 }
