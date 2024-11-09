@@ -20,19 +20,28 @@ class ItemsAdapter extends TypeAdapter<Items> {
       item: fields[0] as String,
       price: fields[1] as int,
       isRated: fields[2] as bool,
+      isDelated: fields[3] as bool,
+      isPurchased: fields[5] as bool,
+      date: fields[4] as DateTime?,
     );
   }
 
   @override
   void write(BinaryWriter writer, Items obj) {
     writer
-      ..writeByte(3)
+      ..writeByte(6)
       ..writeByte(0)
       ..write(obj.item)
       ..writeByte(1)
       ..write(obj.price)
       ..writeByte(2)
-      ..write(obj.isRated);
+      ..write(obj.isRated)
+      ..writeByte(3)
+      ..write(obj.isDelated)
+      ..writeByte(4)
+      ..write(obj.date)
+      ..writeByte(5)
+      ..write(obj.isPurchased);
   }
 
   @override
