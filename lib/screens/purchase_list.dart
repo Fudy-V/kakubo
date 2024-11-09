@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kakubo/core/components/list/list.dart';
 
 class PurchaseList extends StatefulWidget {
   const PurchaseList({super.key});
@@ -10,8 +11,8 @@ class PurchaseList extends StatefulWidget {
 class _PurchaseListState extends State<PurchaseList> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(child: Text('ここに購入予定品リスト')),
+    return Scaffold(
+      body: Center(child: SampleListView()),
     );
   }
 }
