@@ -77,8 +77,8 @@ class _SampleListViewState extends State<SampleListView> {
             actions: <Widget>[
               ElevatedButton(
                 onPressed: () {
-                  _samplelist.removeAt(_index); // モックデータからアイテムを削除
                   setState(() {
+                    _samplelist.removeAt(_index); // モックデータからアイテムを削除
                     _samplelist[_index]['isPurchased'] = true;
                   });
                   Navigator.of(context).pop();
