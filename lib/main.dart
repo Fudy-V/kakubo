@@ -12,9 +12,9 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final appDir = await getApplicationDocumentsDirectory();
   await Hive.initFlutter(appDir.path);
+  Hive.registerAdapter(ItemsAdapter());
   box = await Hive.openBox('aaaa');
 
-  Hive.registerAdapter(ItemsAdapter());
   runApp(const MyApp());
 }
 
