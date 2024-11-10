@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+// import 'package:hive_flutter/hive_flutter.dart';
+import 'package:kakubo/core/datasources/models/items.dart';
+import 'package:kakubo/main.dart';
 
 class SampleListView extends StatefulWidget {
-  @override
-  SampleListView(this._samplelist, this._screen); //これで外のリストを取り込めるようになったはず
-  final List<Map<String, dynamic>> _samplelist;
+  final List<Items> _samplelist;
   final int _screen;
+
+  SampleListView(this._samplelist, this._screen); //これで外のリストを取り込めるようになったはず
+
+  @override
   _SampleListViewState createState() => _SampleListViewState(_samplelist);
 }
 
 class _SampleListViewState extends State<SampleListView> {
   _SampleListViewState(this._samplelist);
-  List<Map<String, dynamic>> _samplelist;
+  List<Items> _samplelist;
   int _index = 0;
 
   @override
@@ -21,37 +26,17 @@ class _SampleListViewState extends State<SampleListView> {
 
   @override
   Widget build(BuildContext context) {
-    int numberOfColumn = _samplelist.length;
     return ListView.separated(
-      itemCount: numberOfColumn,
+      itemCount: _samplelist.length,
       shrinkWrap: true,
       padding: EdgeInsets.all(10.0),
       itemBuilder: (BuildContext context, int index) {
         return ListTile(
-          leading: Icon(Icons.add),
-          title: Container(
-              decoration: BoxDecoration(
-                color: Colors.white70,
-                //border: Border.all(color: Colors.grey, width: 1),
-                borderRadius: BorderRadius.circular(5),
-                /*boxShadow: [
-                    BoxShadow(
-                      blurRadius: 5,
-                      color: Colors.grey.withOpacity(0.5),
-                      offset: Offset(0,5)
-                    )
-                  ]*/
-              ),
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(_samplelist[index]["itemName"]),
-                    Text(_samplelist[index]["price"] + "円")
-                  ])),
-          subtitle: Text(_samplelist[index]["date"]),
+          leading: const Icon(Icons.add_shopping_cart_outlined),
+          title: _buildItemTile(index),
+          subtitle: Text(_samplelist[index].date as String),
           selected: _index == index,
           onTap: () {
-            //ここにタップされたときのデータの受け渡しを記述したい。
             _index = index;
             _tapTile();
           },
@@ -61,143 +46,198 @@ class _SampleListViewState extends State<SampleListView> {
     );
   }
 
+  // アイテムタイルの作成
+  Widget _buildItemTile(int index) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white70,
+        borderRadius: BorderRadius.circular(5),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(_samplelist[index].item),
+          Text("${_samplelist[index].price}円"),
+        ],
+      ),
+    );
+  }
+
+  // タップ時の処理
   void _tapTile() {
     if (widget._screen == 1) {
-      // purchase_list process
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text('購入確認'),
-            content: const Text('この商品を購入しましたか？'),
-            actions: <Widget>[
-              ElevatedButton(
-                onPressed: () {
-                  setState(() {
-                    _samplelist[_index]['isPurchased'] = true;
-                  });
-                  Navigator.of(context).pop();
-                },
-                style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.white,
-                  backgroundColor: const Color.fromARGB(255, 244, 57, 50),
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
-                child: const Text('購入した'),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  setState(() {
-                    _samplelist[_index]['isPurchased'] = false;
-                  });
-                  Navigator.of(context).pop();
-                },
-                style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.white,
-                  backgroundColor: Colors.grey,
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
-                child: const Text('購入していない'),
-              ),
-            ],
-          );
-        },
-      );
+      // 購入リストの処理
+      _showPurchaseDialog();
     } else if (widget._screen == 2) {
-      // unrated_list process
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          double rate = 0;
-          return StatefulBuilder(
-            builder: (context, setState) {
-              return AlertDialog(
-                title: const Text('後悔度入力'),
-                content: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const Text('後悔度を選択してください。'),
-                    RatingBar.builder(
-                      initialRating: 0,
-                      minRating: 0,
-                      direction: Axis.horizontal,
-                      allowHalfRating: true,
-                      itemCount: 5,
-                      itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
-                      itemBuilder: (context, _) => const Icon(
-                        Icons.star,
-                        color: Colors.amber,
-                      ),
-                      onRatingUpdate: (rating) {
-                        setState(() {
-                          rate = rating;
-                        });
-                      },
-                    ),
-                    const SizedBox(height: 10),
-                    Text(
-                      '後悔度：$rate',
-                      style: const TextStyle(
-                        color: Colors.grey,
-                      ),
-                    ),
-                  ],
+      // 未評価リストの処理
+      _showRateDialog();
+    } else {
+      // 後悔リストの処理
+      _showRegretDialog();
+    }
+  }
+
+  // 購入確認ダイアログ
+  void _showPurchaseDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('購入確認'),
+          content: const Text('この商品を購入しましたか？'),
+          actions: <Widget>[
+            ElevatedButton(
+              onPressed: () {
+                // setState(() {
+                //   _samplelist[_index] = true; // bool型で設定
+                // });
+                _saveToHive(_index, 'isPurchased', true); // Hiveに保存
+                Navigator.of(context).pop();
+              },
+              style: ElevatedButton.styleFrom(
+                foregroundColor: Colors.white,
+                backgroundColor: const Color.fromARGB(255, 244, 57, 50),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
                 ),
-                actions: <Widget>[
-                  ElevatedButton(
-                    onPressed: () {
-                      setState(() {
-                        rate = 0;
-                        _samplelist[_index]['rate'] = rate;
-                      });
-                      Navigator.of(context).pop();
-                    },
-                    style: ElevatedButton.styleFrom(
-                      foregroundColor: Colors.white,
-                      backgroundColor: Colors.grey,
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 10, horizontal: 20),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
+              ),
+              child: const Text('購入した'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                // setState(() {
+                //   _samplelist[_index]['isPurchased'] = false; // bool型で設定
+                // });
+                _saveToHive(_index, 'isPurchased', false); // Hiveに保存
+                Navigator.of(context).pop();
+              },
+              style: ElevatedButton.styleFrom(
+                foregroundColor: Colors.white,
+                backgroundColor: Colors.grey,
+                padding:
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+              child: const Text('購入していない'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  // 評価ダイアログ
+  void _showRateDialog() {
+    double rate = 0;
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return AlertDialog(
+              title: const Text('後悔度入力'),
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Text('後悔度を選択してください。'),
+                  RatingBar.builder(
+                    initialRating: 0,
+                    minRating: 0,
+                    direction: Axis.horizontal,
+                    allowHalfRating: true,
+                    itemCount: 5,
+                    itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+                    itemBuilder: (context, _) => const Icon(
+                      Icons.star,
+                      color: Colors.amber,
                     ),
-                    child: const Text('後悔していない'),
+                    onRatingUpdate: (rating) {
+                      setState(() {
+                        rate = rating;
+                      });
+                    },
                   ),
-                  ElevatedButton(
-                    onPressed: () {
-                      setState(() {
-                        _samplelist[_index]['rate'] = rate;
-                      });
-                      Navigator.of(context).pop();
-                    },
-                    style: ElevatedButton.styleFrom(
-                      foregroundColor: Colors.white,
-                      backgroundColor: Colors.blue,
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 10, horizontal: 20),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
+                  const SizedBox(height: 10),
+                  Text(
+                    '後悔度：$rate',
+                    style: const TextStyle(
+                      color: Colors.grey,
                     ),
-                    child: const Text('後悔度を決定'),
                   ),
                 ],
-              );
-            },
-          );
-        },
-      );
+              ),
+              actions: <Widget>[
+                ElevatedButton(
+                  onPressed: () {
+                    // setState(() {
+                    //   // _samplelist[_index]['rate'] = 0; // 後悔していない場合
+                    // });
+                    _saveToHive(_index, 'rate', 0); // Hiveに保存
+                    Navigator.of(context).pop();
+                  },
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: Colors.white,
+                    backgroundColor: Colors.grey,
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 10, horizontal: 20),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  child: const Text('後悔していない'),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    // setState(() {
+                    //   _samplelist[_index]['rate'] = rate; // 後悔度を決定
+                    // });
+                    _saveToHive(_index, 'rate', rate); // Hiveに保存
+                    Navigator.of(context).pop();
+                  },
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: Colors.white,
+                    backgroundColor: Colors.blue,
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 10, horizontal: 20),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  child: const Text('後悔度を決定'),
+                ),
+              ],
+            );
+          },
+        );
+      },
+    );
+  }
+
+  // 後悔リストの処理（ここは未実装）
+  void _showRegretDialog() {
+    print("後悔リスト処理");
+  }
+
+  void _saveToHive(int index, String key, dynamic value) {
+    var item = _samplelist[index];
+
+    // 更新したいフィールドに応じて新しいItemsインスタンスを生成
+    Items updatedItem;
+    if (key == 'isPurchased') {
+      updatedItem = item.setPurchasedStatus(value as bool);
+    } else if (key == 'rate') {
+      updatedItem = item.copyWith(rate: value as double);
     } else {
-      // regret_list process
+      // その他のキーに応じてcopyWithで更新
+      updatedItem = item.copyWith(); // 必要に応じてフィールドを指定
     }
-    print(_index);
+
+    // 更新したインスタンスを反映し、Hiveに保存
+    item = updatedItem;
+    box.put(index, updatedItem);
   }
 }

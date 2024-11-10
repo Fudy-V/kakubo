@@ -15,11 +15,11 @@ void main() async {
 
   // 先にItemsAdapterを登録しなあかんみたい
   Hive.registerAdapter(ItemsAdapter());
-  box = await Hive.openBox<Items>('itemsBox');
+  box = await Hive.openBox<Items>('kakubox');
 
   // openBoxが完了した時にログを出力
   try {
-    await Hive.openBox<Items>('itemsBox');
+    await Hive.openBox<Items>('kakubox');
     print('Hive box opened successfully!');
   } catch (e) {
     print('Error opening Hive box: $e');

@@ -11,7 +11,7 @@ class UnratedList extends StatefulWidget {
 }
 
 class _UnratedListState extends State<UnratedList> {
-  List<Map<String, dynamic>> list = [];
+  List<Items> list = [];
 
   @override
   void initState() {
@@ -20,10 +20,11 @@ class _UnratedListState extends State<UnratedList> {
   }
 
 // ここでHiveからリストにデータを引っ張ってる
-  Future<void> _loadDataFromHive() async {
-    final box = await Hive.openBox<Items>('itemsBox');
+  void _loadDataFromHive() async {
+    final box = await Hive.openBox<Items>('kakubox');
 
-    final items = box.values.where((item) => item.isRated == false);
+    final items = box.values
+        .where((item) => item.isRated == false && item.isPurchased == true);
     setState(() {
       list = items
           .map((item) => {
@@ -31,6 +32,7 @@ class _UnratedListState extends State<UnratedList> {
                 'itemName': item.item,
                 'price': item.price.toString(),
               })
+          .cast<Items>()
           .toList();
     });
   }

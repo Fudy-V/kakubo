@@ -33,6 +33,8 @@ class _InputItemsState extends State<InputItems> {
       item: itemName,
       price: itemPrice,
       date: currentDate, // 日付を追加
+      isRated: false, // 追加した場合の例
+      isPurchased: false, // 追加した場合の例
     );
     // final box = Hive.box('itemsBox');
     box.add(newItem);

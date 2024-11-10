@@ -30,4 +30,36 @@ class Items {
   }) : date = date ??
             DateTime(
                 DateTime.now().year, DateTime.now().month, DateTime.now().day);
+
+  // isPurchasedを変更するためのメソッド
+  Items setPurchasedStatus(bool status) {
+    return Items(
+      item: item,
+      price: price,
+      isRated: isRated,
+      isDelated: isDelated,
+      isPurchased: status, // 新しいステータスをセット
+      rate: rate,
+      date: date,
+    );
+  }
+
+  // rateを変更するためのメソッド（copyWith）
+  Items copyWith({
+    bool? isRated,
+    bool? isDelated,
+    bool? isPurchased,
+    double? rate,
+    DateTime? date,
+  }) {
+    return Items(
+      item: item,
+      price: price,
+      isRated: isRated ?? this.isRated,
+      isDelated: isDelated ?? this.isDelated,
+      isPurchased: isPurchased ?? this.isPurchased,
+      rate: rate ?? this.rate, // rateを変更する
+      date: date ?? this.date,
+    );
+  }
 }
