@@ -11,12 +11,8 @@ class UnratedList extends StatefulWidget {
 class _UnratedListState extends State<UnratedList> {
   //サンプルのデータです
   final List<Map<String, dynamic>> list = [
-    {'date': '2024/11/09', 'itemName': 'pencil', 'price': '100'},
-    {'date': '2024/11/07', 'itemName': 'eraser', 'price': '120'},
-    {'date': '2024/11/07', 'itemName': 'macMiniPCM4chip', 'price': '200000'},
-    {'date': '2024/11/07', 'itemName': 'pomodoroTimer', 'price': '1200'},
-    {'date': '2024/11/07', 'itemName': 'ChatGPTaccount', 'price': '1200'},
-    {'date': '2024/11/07', 'itemName': 'coffee', 'price': '540'}
+    {'date': '2024/11/09', 'itemName': 'うまい棒', 'price': '100'},
+    {'date': '2024/11/07', 'itemName': 'iPhone15', 'price': '120000'},
   ];
   @override
   Widget build(BuildContext context) {
