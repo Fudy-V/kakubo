@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:kakubo/core/components/inputButton/input_buttton.dart';
 import 'package:kakubo/core/components/list/list.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:kakubo/main.dart';
+import 'package:kakubo/core/datasources/models/items.dart';
 
 class PurchaseList extends StatefulWidget {
   const PurchaseList({super.key});
@@ -12,7 +13,7 @@ class PurchaseList extends StatefulWidget {
 
 class _PurchaseListState extends State<PurchaseList> {
   //サンプルのデータです
-  final List<Map<String, dynamic>> list = [
+  List<Map<String, dynamic>> list = [
     {'date': '2024/11/09', 'itemName': 'pencil', 'price': '100'},
     {'date': '2024/11/07', 'itemName': 'eraser', 'price': '120'},
     {'date': '2024/11/07', 'itemName': 'macMiniPCM4chip', 'price': '200000'},
@@ -20,6 +21,22 @@ class _PurchaseListState extends State<PurchaseList> {
     {'date': '2024/11/07', 'itemName': 'ChatGPTaccount', 'price': '1200'},
     {'date': '2024/11/07', 'itemName': 'coffee', 'price': '540'}
   ];
+  @override
+  initState() {
+    box.watch().listen((event) {
+      final Items newItems = event.value;
+      if (newItems.isPurchased == false) {
+        list.add({
+          'date': newItems.date.toString(),
+          'itemName': newItems.item.toString(),
+          'price': newItems.price.toString()
+        });
+        setState(() {});
+      }
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
