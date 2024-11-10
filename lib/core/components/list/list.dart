@@ -3,9 +3,13 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class SampleListView extends StatefulWidget {
   @override
-  SampleListView(this._samplelist, this._screen); //これで外のリストを取り込めるようになったはず
+  SampleListView(
+    this._samplelist,
+    this._screen,
+  ); //これで外のリストを取り込めるようになったはず
   final List<Map<String, dynamic>> _samplelist;
   final int _screen;
+
   _SampleListViewState createState() => _SampleListViewState(_samplelist);
 }
 
@@ -73,9 +77,9 @@ class _SampleListViewState extends State<SampleListView> {
             actions: <Widget>[
               ElevatedButton(
                 onPressed: () {
+                  _samplelist.removeAt(_index); // モックデータからアイテムを削除
                   setState(() {
                     _samplelist[_index]['isPurchased'] = true;
-                    _samplelist.removeAt(_index); // モックデータからアイテムを削除
                   });
                   Navigator.of(context).pop();
                 },

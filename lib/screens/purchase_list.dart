@@ -21,13 +21,14 @@ class _PurchaseListState extends State<PurchaseList> {
     {'date': '2024/11/07', 'itemName': 'ChatGPTaccount', 'price': '1200'},
     {'date': '2024/11/07', 'itemName': 'coffee', 'price': '540'}
   ];
+
   @override
   initState() {
     box.watch().listen((event) {
       final Items newItems = event.value;
       if (newItems.isPurchased == false) {
         list.add({
-          'date': newItems.date.toString(),
+          'date': newItems.date.toString().split(' ')[0],
           'itemName': newItems.item.toString(),
           'price': newItems.price.toString()
         });
@@ -41,7 +42,11 @@ class _PurchaseListState extends State<PurchaseList> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: const InputButtton(),
-      body: Center(child: SampleListView(list, 1)),
+      body: Center(
+          child: SampleListView(
+        list,
+        1,
+      )),
     );
   }
 }
