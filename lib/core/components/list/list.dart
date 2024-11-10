@@ -75,6 +75,7 @@ class _SampleListViewState extends State<SampleListView> {
                 onPressed: () {
                   setState(() {
                     _samplelist[_index]['isPurchased'] = true;
+                    _samplelist.removeAt(_index); // モックデータからアイテムを削除
                   });
                   Navigator.of(context).pop();
                 },
